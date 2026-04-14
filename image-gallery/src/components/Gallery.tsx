@@ -3,7 +3,12 @@ import { initialImages } from '../data/images';
 import ImageItem from './ImageItem';
 
 function Gallery() {
-    const [images] = useState(initialImages)
+    const [images, setImages] = useState(initialImages)
+
+    const handleDelete = (id: string) => {
+        if (window.confirm('Are you sure you want to delete this image?')) {
+        setImages(images.filter((img) => img.id !== id))
+    }}
 
     return (
         <div className="gallery
@@ -13,6 +18,7 @@ function Gallery() {
                 key={image.id}
                 image={image}
                 isFeatured={index === 0}
+                onDelete={handleDelete}
                 />
             ))}
         </div>
