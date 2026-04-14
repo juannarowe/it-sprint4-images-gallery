@@ -7,8 +7,8 @@ type ImageItemProps = {
 
 function ImageItem ({ image, isFeatured }: ImageItemProps) {
     return (
-        <div className={isFeatured ? 'featured' : ''}>
-            <img src={image.src} alt={image.alt} />
+        <div className={`aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}`}>
+            <img className='w-full h-full object-cover' src={image.src} alt={image.alt} />
         </div>
     )
 }

@@ -6,7 +6,8 @@ function Gallery() {
     const [images] = useState(initialImages)
 
     return (
-        <div className="gallery">
+        <div className="gallery
+        grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
             {images.map((image, index) => (
                 <ImageItem
                 key={image.id}
