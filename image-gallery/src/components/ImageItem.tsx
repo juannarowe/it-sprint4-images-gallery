@@ -1,5 +1,7 @@
 import type { Image } from '../types/image';
 import { Trash2 } from 'lucide-react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 type ImageItemProps = {
     image: Image;
@@ -8,8 +10,16 @@ type ImageItemProps = {
 }
 
 function ImageItem({ image, isFeatured, onDelete }: ImageItemProps) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: image.id })
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    }
+
     return (
-        <div className={`relative aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}`}>
+        <div className={`relative aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}`}
+            ref={setNodeRef} style={style} {...attributes} {...listeners} >
             <img className='w-full h-full object-cover' src={image.src} alt={image.alt} />
             <button
                 aria-label="Delete image"
