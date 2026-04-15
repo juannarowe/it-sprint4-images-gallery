@@ -7,9 +7,11 @@ type ImageItemProps = {
     image: Image;
     isFeatured?: boolean;
     onDelete: (id: string) => void;
+    isSelected?: boolean;
+    onToggleSelect: (id: string) => void;
 }
 
-function ImageItem({ image, isFeatured, onDelete }: ImageItemProps) {
+function ImageItem({ image, isFeatured, onDelete, isSelected, onToggleSelect }: ImageItemProps) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: image.id })
 
     const style = {
@@ -18,13 +20,21 @@ function ImageItem({ image, isFeatured, onDelete }: ImageItemProps) {
     }
 
     return (
-        <div className={`relative aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}`}
-            ref={setNodeRef} style={style} {...attributes} {...listeners} >
+        <div className={`relative aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}
+                        ${isSelected ? 'ring-4 ring-blue-500' : ''}`}
+            ref={setNodeRef} style={style} {...attributes} {...listeners}
+            >
             <img className='w-full h-full object-cover' src={image.src} alt={image.alt} />
+            <div
+                className="absolute inset-0 z-10 cursor-pointer"
+                onClick={() => onToggleSelect(image.id)}
+            />
             <button
                 aria-label="Delete image"
                 className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded"
-                onClick={() => onDelete(image.id)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    onDelete(image.id)}}
             >
                 <Trash2 size={16} />
             </button>

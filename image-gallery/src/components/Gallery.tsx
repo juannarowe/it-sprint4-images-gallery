@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { initialImages } from '../data/images';
 import ImageItem from './ImageItem';
-import { DndContext, closestCenter } from '@dnd-kit/core';
+import { DndContext, closestCenter, useSensor, useSensors, MouseSensor, TouchSensor } from '@dnd-kit/core';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
 
 function Gallery() {
     const [images, setImages] = useState(initialImages)
+
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
     const handleDelete = (id: string) => {
         if (window.confirm('Are you sure you want to delete this image?')) {
@@ -23,8 +25,34 @@ function Gallery() {
         }
     }
 
+    const handleToggleSelect = (id: string) => {
+        const newSet = new Set(selectedIds)
+        if (selectedIds.has(id)) { 
+            newSet.delete(id)
+        } else {
+            newSet.add(id)
+        }
+        setSelectedIds(newSet)
+    }
+
+    const handleDeleteSelected = () => {
+        if (window.confirm(`Delete ${selectedIds.size} selected images?`)) {
+            setImages(images.filter((img) => !selectedIds.has(img.id)))
+            setSelectedIds(new Set())
+        }
+    }
+
+    const sensors = useSensors(
+        useSensor(MouseSensor, {
+            activationConstraint: { distance: 8 },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: { delay: 200, tolerance: 5 },
+        })
+    )
+
     return (
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={images.map((img) => img.id)} strategy={rectSortingStrategy}>
                 <div className="gallery grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                     {images.map((image, index) => (
@@ -33,6 +61,8 @@ function Gallery() {
                             image={image}
                             isFeatured={index === 0}
                             onDelete={handleDelete}
+                            isSelected={selectedIds.has(image.id)}
+                            onToggleSelect={handleToggleSelect}
                         />
                     ))}
                 </div>
