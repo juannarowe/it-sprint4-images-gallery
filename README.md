@@ -49,13 +49,31 @@ npm run dev
 ```
 image-gallery/
 └── src/
-    ├── types/          # TypeScript interfaces
-    ├── components/     # React components
+    ├── types/              # TypeScript interfaces
+    │   └── image.ts
+    ├── data/               # Static data
+    │   └── images.ts
+    ├── components/         # React components
+    │   ├── ui/             # shadcn/ui components
+    │   │   └── button.tsx
     │   ├── Gallery.tsx
-    │   └── ImageItem.tsx
+    │   ├── Gallery.test.tsx
+    │   ├── ImageItem.tsx
+    │   └── ImageItem.test.tsx
     ├── App.tsx
     └── main.tsx
 ```
+
+## Testing
+
+Tests are written with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/react).
+
+```bash
+npm test                 # run tests in watch mode
+npm run test:coverage    # run tests with coverage report
+```
+
+Coverage targets: Statements >80%, Lines >80%, Functions >80%.
 
 ## Git Workflow
 
