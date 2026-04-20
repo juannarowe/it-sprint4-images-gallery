@@ -20,8 +20,9 @@ function ImageItem({ image, isFeatured, onDelete, isSelected, onToggleSelect }: 
     }
 
     return (
-        <div className={`relative aspect-square ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : ''}
+        <div className={`relative ${isFeatured ? 'lg:col-span-2 lg:row-span-2' : 'aspect-square'}
                         ${isSelected ? 'ring-4 ring-blue-500' : ''}`}
+            aria-label={isFeatured ? 'Featured image' : undefined}
             ref={setNodeRef} style={style} {...attributes} {...listeners}
             >
             <img className='w-full h-full object-cover' src={image.src} alt={image.alt} />
