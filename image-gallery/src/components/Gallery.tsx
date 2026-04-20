@@ -68,7 +68,7 @@ function Gallery() {
                 </div>
                 {selectedIds.size > 0 && (
                     <button
-                        className="bg-red-500 text-white px-4 py-2 rounded"
+                        className="bg-red-500 text-white px-4 py-2 rounded ml-4"
                         onClick={handleDeleteSelected}
                         >
                             Delete {selectedIds.size} selected

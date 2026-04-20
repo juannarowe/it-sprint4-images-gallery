@@ -8,5 +8,4 @@ export const initialImages: Image[] = [
     { id: '5', src: 'https://picsum.photos/id/50/600/400', alt: 'Desert sand dunes' },
     { id: '6', src: 'https://picsum.photos/id/60/600/400', alt: 'Snowy mountain peaks' },
     { id: '7', src: 'https://picsum.photos/id/70/600/400', alt: 'Tropical beach' },
-    { id: '8', src: 'https://picsum.photos/id/80/600/400', alt: 'Green valley' },
 ]

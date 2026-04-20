@@ -26,12 +26,13 @@ function ImageItem({ image, isFeatured, onDelete, isSelected, onToggleSelect }: 
             >
             <img className='w-full h-full object-cover' src={image.src} alt={image.alt} />
             <div
-                className="absolute inset-0 z-10 cursor-pointer"
+                data-testid="select-overlay"
+                className="absolute inset-0 z-10"
                 onClick={() => onToggleSelect(image.id)}
             />
             <button
                 aria-label="Delete image"
-                className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded"
+                className="absolute top-2 right-2 z-20 cursor-pointer bg-black text-white text-xs px-2 py-1 rounded"
                 onClick={(e) => {
                     e.stopPropagation()
                     onDelete(image.id)}}
